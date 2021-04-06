@@ -19,7 +19,7 @@ void shiftRight(uint8_t binario[], size_t tam) {
 	binario[0] = 0;
 }
 
-// retorna binario contendo a soma na primeira 
+// retorna array contendo a soma na primeira 
 // posição e o carryOut na segunda
 uint8_t * meioSomador(uint8_t a, uint8_t b) {
 	uint8_t soma = a ^ b;
