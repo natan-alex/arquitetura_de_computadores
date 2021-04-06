@@ -45,7 +45,7 @@ uint8_t * somador1bit(uint8_t a, uint8_t b, uint8_t carryIn) {
 // entradas são arrays que representam os números binários
 uint8_t * somadorNbits(uint8_t a[], uint8_t b[], uint8_t carryIn, uint8_t n) {
 	// tmp é usado para controle dos carries
-	// e a soma de cada par de bits
+	// e a soma bit a bit
 	uint8_t * tmp = (uint8_t *)malloc(sizeof(uint8_t)*2);
 	uint8_t * result = (uint8_t *)malloc(sizeof(uint8_t)*n);
 	// carry in inicial e soma inicial valem 0
@@ -62,7 +62,7 @@ uint8_t * somadorNbits(uint8_t a[], uint8_t b[], uint8_t carryIn, uint8_t n) {
 	return result;
 }
 
-// junta dois arrays em um único binario
+// junta dois arrays em um único array
 uint8_t * joinArrays(uint8_t parte1[], uint8_t parte2[], size_t tamParte) {
 	uint8_t * result = (uint8_t *)malloc(sizeof(uint8_t)*tamParte*2);
 	// add primeiro array
