@@ -86,10 +86,14 @@ int main(int argc, char ** argv) {
 				printf("Não\n");
 			printf("\n");
 		} else {
-			if (op == 0)
+			if (op == 0) {
 				printf("\nPrograma encerrado.\n");
-			else
+				free(multiplicador);
+				free(multiplicando);
+				free(produto);
+			} else {
 				printf("Opção inválida.\n");
+			}
 		}
 	} while (op != 0);
 
