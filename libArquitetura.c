@@ -7,6 +7,7 @@
 
 #include "libArquitetura.h"
 
+
 BinaryNumber * create_new_binary_number(uint8_t number_of_bits) {
     BinaryNumber * binary = (BinaryNumber *) malloc(sizeof(BinaryNumber));
 
@@ -16,6 +17,7 @@ BinaryNumber * create_new_binary_number(uint8_t number_of_bits) {
     return binary;
 }
 
+
 void doInPlaceShiftLeft(BinaryNumber * binary) {
 	for (int i = 0; i < binary->number_of_bits; i++) {
         binary->bits[i] = binary->bits[i+1];
@@ -23,6 +25,7 @@ void doInPlaceShiftLeft(BinaryNumber * binary) {
 
     binary->bits[binary->number_of_bits-1] = 0;
 }
+
 
 void doInPlaceShiftRight(BinaryNumber * binary) {
 	for (int i = binary->number_of_bits; i > 0; i--) {
@@ -32,6 +35,7 @@ void doInPlaceShiftRight(BinaryNumber * binary) {
     binary->bits[0] = 0;
 }
 
+
 SumResultOf1BitOperation * getHalfSum(uint8_t first_bit, uint8_t second_bit) {
     SumResultOf1BitOperation * result = (SumResultOf1BitOperation *) malloc(sizeof(SumResultOf1BitOperation));
 
@@ -40,6 +44,7 @@ SumResultOf1BitOperation * getHalfSum(uint8_t first_bit, uint8_t second_bit) {
 
 	return result;
 }
+
 
 SumResultOf1BitOperation * getSumOf1Bit(uint8_t first_bit, uint8_t second_bit, uint8_t carry_in) {
 	SumResultOf1BitOperation * first_half_sum = getHalfSum(first_bit, second_bit);
@@ -54,6 +59,7 @@ SumResultOf1BitOperation * getSumOf1Bit(uint8_t first_bit, uint8_t second_bit, u
 
 	return result;
 }
+
 
 SumResultOfNBitsOperation * getSumOfNBits(BinaryNumber * first, BinaryNumber * second, uint8_t carry_in) {
     if (first->number_of_bits != second->number_of_bits) {
@@ -80,6 +86,7 @@ SumResultOfNBitsOperation * getSumOfNBits(BinaryNumber * first, BinaryNumber * s
 	return result;
 }
 
+
 BinaryNumber * getNewBinaryByJoiningTwoBinaryNumbers(BinaryNumber * first, BinaryNumber * second) {
 	BinaryNumber * result = create_new_binary_number(first->number_of_bits + second->number_of_bits);
 
@@ -92,6 +99,7 @@ BinaryNumber * getNewBinaryByJoiningTwoBinaryNumbers(BinaryNumber * first, Binar
 	return result;
 }
 
+
 BinaryNumber * getASliceOfABinaryNumber(BinaryNumber * binary, uint8_t index_of_first_bit, uint8_t slice_length) {
 	BinaryNumber * result = create_new_binary_number(slice_length);
 	uint8_t index_where_insert_the_new_bit = 0;
@@ -103,6 +111,7 @@ BinaryNumber * getASliceOfABinaryNumber(BinaryNumber * binary, uint8_t index_of_
 	return result;
 }
 
+
 void showBinaryNumber(BinaryNumber * binary) {
 	printf("[ ");
 
@@ -111,6 +120,7 @@ void showBinaryNumber(BinaryNumber * binary) {
 
 	printf("]");
 }
+
 
 int getDecimalValue(BinaryNumber * binary) {
 	int result = 0;
@@ -125,6 +135,7 @@ int getDecimalValue(BinaryNumber * binary) {
 	return result;
 }
 
+
 int getDecimalValueOfABinaryNumberRepresentedByAString(char binary[]) {
 	int result = 0;
 	int positional_value = 1;
@@ -138,6 +149,7 @@ int getDecimalValueOfABinaryNumberRepresentedByAString(char binary[]) {
 
 	return result;
 }
+
 
 BinaryNumber * readBinaryNumber(uint8_t number_of_bits) {
 	BinaryNumber * result = create_new_binary_number(number_of_bits);
@@ -163,6 +175,7 @@ BinaryNumber * readBinaryNumber(uint8_t number_of_bits) {
 
 	return result;
 }
+
 
 uint8_t getDecimalValueOfAHexChar(char c) {
     /*  
@@ -194,6 +207,7 @@ uint8_t getDecimalValueOfAHexChar(char c) {
 
     return hex_value;
 }
+
 
 BinaryNumber * getBinaryFromADecimalValue(int decimal_value) {
 	int number_of_bits = floor(log10(decimal_value) / log10(2) + 1);
