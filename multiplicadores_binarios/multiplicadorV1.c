@@ -5,61 +5,57 @@
 #include "../libArquitetura.h"
 #include "multiplicadorV1.h"
 
-uint8_t * multiplicadorNbitsV1(uint8_t * multiplicador, uint8_t * multiplicando, uint8_t palavra) {
-	// multiplicador possui palavra bits
-	// multiplicando possui 2*palavra bits
-	// produto possui 2*palavra bits
-	uint8_t * produto = (uint8_t *) malloc(sizeof(uint8_t)*2*palavra);
-	uint8_t controle = 0;
+BinaryNumber * multiplierNBitsV1(BinaryNumber * multiplier, BinaryNumber * multiplicand, uint8_t word) {
+	// multiplier possui word bits
+	// multiplicand possui 2*word bits
+	// product possui 2*word bits
+
+	BinaryNumber * product = create_new_binary_number(2*word);
 	
 	printf("\n\tAlgoritmo do multiplicador versão 1:\n");
-	
 	printf("Inicializar os itens de produto com 0\n");
-	// inicializar itens de produto
-	for (size_t i = 0; i < 2*palavra; i++)
-		produto[i] = 0;
+
+	for (int i = 0; i < 2*word; i++)
+		product->bits[i] = 0;
 		
-	while (controle < palavra) {
-		printf("\n  %dª iteração:\n", controle+1);
+    for (int i = 0; i < word; i++) {
+		printf("\n  %dª iteração:\n", i+1);
 		printf("Produto: ");
-		printarBinario(produto, 2*palavra);
+		showBinaryNumber(product);
 		printf("\n");
 		printf("Multiplicador: ");
-		printarBinario(multiplicador, palavra);
+		showBinaryNumber(multiplier);
 		printf("\n");
 		printf("Multiplicando: ");
-		printarBinario(multiplicando, 2*palavra);
+		showBinaryNumber(multiplicand);
 		printf("\n");
 	
-		printf("Bit menos significativo do multiplicador: %d\n", multiplicador[palavra-1]);
-		if (multiplicador[palavra-1] == 1) {
+		printf("Bit menos significativo do multiplicador: %d\n", multiplier->bits[word-1]);
+		if (multiplier->bits[word-1] == 1) {
 			printf("Já que o bit menos significativo é 1:\n");
-			// somar produto com o multiplicando
 			printf("  Somar o produto e o multiplicando.\n");
 
-			produto = somadorNbits(produto, multiplicando, 0, 2*palavra);
+			product = getSumOfNBits(product, multiplicand, 0)->sum;
 
 			printf("  Resultado da soma: ");
-			printarBinario(produto, 2 * palavra);
+			showBinaryNumber(product);
 			printf("\n");
 		}
 		
 		printf("Fazer o shift right do multiplicador e o shift left do multiplicando.\n");
 
-		shiftLeft(multiplicando, 2*palavra);
-		shiftRight(multiplicador, palavra);
+		doInPlaceShiftLeft(multiplicand);
+		doInPlaceShiftRight(multiplier);
 
 		printf("  Após o shift:\n");
 
 		printf("    Multiplicador: ");
-		printarBinario(multiplicador, palavra);
+		showBinaryNumber(multiplier);
 		printf("\n");
 		printf("    Multiplicando: ");
-		printarBinario(multiplicando, 2* palavra);
+		showBinaryNumber(multiplicand);
 		printf("\n");
-
-		controle++;
 	}
 	
-	return produto;
+	return product;
 }

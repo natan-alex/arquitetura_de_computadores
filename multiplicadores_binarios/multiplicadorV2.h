@@ -1,8 +1,9 @@
 #include <stdint.h>
+#include "../libArquitetura.h"
+
 #ifndef MULTIPLICADORV2_H
 #define MULTIPLICADORV2_H
 
-uint8_t * multiplicadorNbitsV2(uint8_t * multiplicador, uint8_t * multiplicando, uint8_t palavra);
+BinaryNumber * multiplierNBitsV2(BinaryNumber * multiplier, BinaryNumber * multiplicand, uint8_t word);
 
 #endif
-

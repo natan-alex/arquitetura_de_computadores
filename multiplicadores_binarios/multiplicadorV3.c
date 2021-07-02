@@ -4,74 +4,67 @@
 
 #include "../libArquitetura.h"
 
-uint8_t * multiplicadorNbitsV3(uint8_t * multiplicador, uint8_t * multiplicando, uint8_t palavra) {
-	// o produto seriam 2 partes de tamanho palavra,
-	// como se estivessem separadas
-	uint8_t * produto = (uint8_t *) malloc(sizeof(uint8_t)*2*palavra);
-	uint8_t controle = 0;
-	uint8_t * primeiraMetadeDoProduto;
+BinaryNumber * multiplierNBitsV3(BinaryNumber * multiplier, BinaryNumber * multiplicand, uint8_t word) {
+	BinaryNumber * product = create_new_binary_number(2*word);
+	BinaryNumber * firstHalfOfProduct = create_new_binary_number(word);
 
 	printf("\n\tAlgoritmo do multiplicador versão 3:\n");
 	
-	// inicializar itens da metade da esquerda de produto
 	printf("Inicializar o itens de produto com 0\n");
-	for (size_t i = 0; i < palavra; i++)
-		produto[i] = 0;
+	for (int i = 0; i < word; i++)
+		product->bits[i] = 0;
 		
-	// copiar multiplicador para a metade da direita de produto
 	printf("Copiar o multiplicador para a segunda metade do produto.\n");
-	for (size_t i = 0; i < palavra; i++)
-		produto[i+palavra] = multiplicador[i];
+	for (int i = 0; i < word; i++)
+		product->bits[i+word] = multiplier->bits[i];
 		
-	while (controle < palavra) {
-		printf("\n  %dª iteração:\n", controle+1);
+	for (int i = 0; i < word; i++) {
+		printf("\n  %dª iteração:\n", i+1);
 		printf("Produto: ");
-		printarBinario(produto, 2*palavra);
+		showBinaryNumber(product);
 		printf("\n");
 		printf("Multiplicador: ");
-		printarBinario(multiplicador, palavra);
+		showBinaryNumber(multiplier);
 		printf("\n");
 		printf("Multiplicando: ");
-		printarBinario(multiplicando, 2*palavra);
+		showBinaryNumber(multiplicand);
 		printf("\n");
 
-		primeiraMetadeDoProduto = splitArray(produto, 0, palavra, 2*palavra);
+		firstHalfOfProduct = getASliceOfABinaryNumber(product, 0, word);
 		
 		printf("Obter a primeira metade do array produto. Metade: ");
-		printarBinario(primeiraMetadeDoProduto, palavra);
+		showBinaryNumber(firstHalfOfProduct);
 		printf("\n");
 
-		printf("Bit menos significativo do produto: %d\n", produto[2*palavra-1]);
-		if (produto[2*palavra-1] == 1) {
-			// somar primeiraMetadeDoProduto com o multiplicando
+		printf("Bit menos significativo do produto: %d\n", product->bits[2*word-1]);
+		if (product->bits[2*word-1] == 1) {
 			printf("Já que o bit menos significativo é 1:\n");
 			printf("  Somar a primeira metade do produto com o multiplicando.\n");
 
-			primeiraMetadeDoProduto = somadorNbits(primeiraMetadeDoProduto,multiplicando,0, palavra);
+			firstHalfOfProduct = getSumOfNBits(firstHalfOfProduct,multiplicand,0)->sum;
 
 			printf("  Resultado da soma: ");
-			printarBinario(primeiraMetadeDoProduto, palavra);
+			showBinaryNumber(firstHalfOfProduct);
 			printf("\n");
 		}
 		
 		// copiar primeiraMetadeDoProduto pra produto 
-		for (size_t i = 0; i < palavra; i++) 
-			produto[i] = primeiraMetadeDoProduto[i];
+		for (int i = 0; i < word; i++) 
+			product->bits[i] = firstHalfOfProduct->bits[i];
 			
 		printf("Fazer o shift right do produto.\n");
 		printf("  Após o shift:\n");
 
-		shiftRight(produto, 2*palavra);
+		doInPlaceShiftRight(product);
 
 		printf("    Produto: ");
-		printarBinario(produto, 2*palavra);
+		showBinaryNumber(product);
 		printf("\n");
-
-		controle++;
 	}
 	
-	free(primeiraMetadeDoProduto);
-	primeiraMetadeDoProduto = NULL;
+	free(firstHalfOfProduct->bits);
+	free(firstHalfOfProduct);
+	firstHalfOfProduct = NULL;
 	
-	return produto;
+	return product;
 }

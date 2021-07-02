@@ -1,8 +1,9 @@
 #include <stdint.h>
+#include "../libArquitetura.h"
+
 #ifndef MULTIPLICADORV3_H
 #define MULTIPLICADORV3_H
 
-uint8_t * multiplicadorNbitsV3(uint8_t * multiplicador, uint8_t * multiplicando, uint8_t palavra);
+BinaryNumber * multiplierNBitsV3(BinaryNumber * multiplier, BinaryNumber * multiplicand, uint8_t word);
 
 #endif
-
