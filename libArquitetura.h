@@ -46,5 +46,6 @@ BinaryNumber * readBinaryNumber(uint8_t number_of_bits);
 
 uint8_t getDecimalValueOfAHexChar(char c);
 
+BinaryNumber * getBinaryFromADecimalValue(int decimal_value);
 
 #endif

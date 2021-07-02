@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stddef.h>
+#include <math.h>
 
 #include "libArquitetura.h"
 
@@ -93,10 +94,10 @@ BinaryNumber * getNewBinaryByJoiningTwoBinaryNumbers(BinaryNumber * first, Binar
 
 BinaryNumber * getASliceOfABinaryNumber(BinaryNumber * binary, uint8_t index_of_first_bit, uint8_t slice_length) {
 	BinaryNumber * result = create_new_binary_number(slice_length);
-	uint8_t where_insert_in_result = 0;
+	uint8_t index_where_insert_the_new_bit = 0;
 
 	for (int i = index_of_first_bit; i < (index_of_first_bit + slice_length) && i < binary->number_of_bits; i++) {
-		result->bits[where_insert_in_result++] = binary->bits[i];
+		result->bits[index_where_insert_the_new_bit++] = binary->bits[i];
 	}
 
 	return result;
@@ -192,4 +193,20 @@ uint8_t getDecimalValueOfAHexChar(char c) {
     }   
 
     return hex_value;
+}
+
+BinaryNumber * getBinaryFromADecimalValue(int decimal_value) {
+	int number_of_bits = floor(log10(decimal_value) / log10(2) + 1);
+	BinaryNumber * result = create_new_binary_number(number_of_bits);
+	int index_where_insert_the_new_bit = number_of_bits - 1;
+	int quotient = decimal_value;
+
+	do {
+		result->bits[index_where_insert_the_new_bit--] = quotient % 2;
+		quotient = quotient / 2;
+	} while (quotient >= 2);
+
+	result->bits[index_where_insert_the_new_bit] = quotient;
+
+	return result;
 }
